@@ -5,6 +5,8 @@ import 'question_screen.dart'; // Ensure this matches the file name where `Quest
 import 'login_screen.dart'; // Ensure this matches the file name where `QuestionScreen` is defined
 
 class OnboardingScreen extends StatelessWidget {
+  const OnboardingScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,7 +19,7 @@ class OnboardingScreen extends StatelessWidget {
             Expanded(
               child: Container(
                 color: Colors.white,
-                child: Center(
+                child: const Center(
                   child: Text(
                     '', // Intentionally left blank as per your design
                     style: TextStyle(
@@ -44,7 +46,7 @@ class OnboardingScreen extends StatelessWidget {
                       );
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Color(0xFFE67E22), // Orange color
+                      backgroundColor: const Color(0xFFE67E22), // Orange color
                       padding: const EdgeInsets.symmetric(vertical: 16),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
@@ -69,7 +71,7 @@ class OnboardingScreen extends StatelessWidget {
                         Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => LoginScreen()),
+                            builder: (context) => const LoginScreen()),
                       );
                     },
                     style: OutlinedButton.styleFrom(
@@ -77,7 +79,7 @@ class OnboardingScreen extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
                       ),
-                      side: BorderSide(
+                      side: const BorderSide(
                         color: Color(0xFF27AE60), // Green border
                         width: 2,
                       ),

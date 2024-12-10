@@ -125,25 +125,33 @@ class _LoginScreenState extends State<LoginScreen> {
                     height: 50,
                     child: ElevatedButton(
                       onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          // Simple login validation (replace with your actual authentication logic)
-                          if (_emailController.text.isNotEmpty &&
-                              _passwordController.text.isNotEmpty) {
-                            // Navigate to HomeScreen with user's email
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => MainNavigationScreen(
-                                    userEmail: _emailController.text),
-                              ),
-                            );
-                          } else {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                  content: Text('Invalid email or password')),
-                            );
-                          }
-                        }
+
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => MainNavigationScreen(
+                                userEmail: _emailController.text),
+                          ),
+                        );
+                        // if (_formKey.currentState!.validate()) {
+                        //   // Simple login validation (replace with your actual authentication logic)
+                        //   if (_emailController.text.isNotEmpty &&
+                        //       _passwordController.text.isNotEmpty) {
+                        //     // Navigate to HomeScreen with user's email
+                        //     Navigator.pushReplacement(
+                        //       context,
+                        //       MaterialPageRoute(
+                        //         builder: (context) => MainNavigationScreen(
+                        //             userEmail: _emailController.text),
+                        //       ),
+                        //     );
+                        //   } else {
+                        //     ScaffoldMessenger.of(context).showSnackBar(
+                        //       const SnackBar(
+                        //           content: Text('Invalid email or password')),
+                        //     );
+                        //   }
+                        // }
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.orange,
@@ -162,8 +170,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                   const SizedBox(height: 20),
-                  Row(
-                    children: const [
+                  const Row(
+                    children: [
                       Expanded(
                           child: Divider(color: Colors.black54, thickness: 1)),
                       Padding(

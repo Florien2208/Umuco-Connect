@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class QuestionScreen extends StatefulWidget {
+  const QuestionScreen({super.key});
+
   @override
   _QuestionScreenState createState() => _QuestionScreenState();
 }
@@ -31,15 +33,15 @@ class _QuestionScreenState extends State<QuestionScreen> {
                         value: progress,
                         backgroundColor: Colors.grey.shade300,
                         valueColor:
-                            AlwaysStoppedAnimation<Color>(Color(0xFFE67E22)),
+                            const AlwaysStoppedAnimation<Color>(Color(0xFFE67E22)),
                         minHeight: 10,
                       ),
                     ),
                   ),
-                  SizedBox(width: 16),
+                  const SizedBox(width: 16),
                   Text(
                     '${(progress * 100).toInt()}%',
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 14,
                     ),
@@ -52,7 +54,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
               child: Center(
                 child: Text(
                   'Question $currentQuestionIndex: What is your favorite color?',
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.bold,
                   ),
@@ -75,13 +77,13 @@ class _QuestionScreenState extends State<QuestionScreen> {
                       });
                     },
                     style: ElevatedButton.styleFrom(
-                      padding: EdgeInsets.symmetric(vertical: 16),
+                      padding: const EdgeInsets.symmetric(vertical: 16),
                       backgroundColor: Colors.grey.shade200,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
                       ),
                     ),
-                    child: Row(
+                    child: const Row(
                       children: [
                         Icon(Icons.circle, size: 24, color: Colors.blue),
                         SizedBox(width: 16),
@@ -92,7 +94,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
                       ],
                     ),
                   ),
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
                   ElevatedButton(
                     onPressed: () {
                       setState(() {
@@ -102,13 +104,13 @@ class _QuestionScreenState extends State<QuestionScreen> {
                       });
                     },
                     style: ElevatedButton.styleFrom(
-                      padding: EdgeInsets.symmetric(vertical: 16),
+                      padding: const EdgeInsets.symmetric(vertical: 16),
                       backgroundColor: Colors.grey.shade200,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
                       ),
                     ),
-                    child: Row(
+                    child: const Row(
                       children: [
                         Icon(Icons.circle, size: 24, color: Colors.red),
                         SizedBox(width: 16),
@@ -122,7 +124,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
                 ],
               ),
             ),
-            SizedBox(height: 30), // Bottom padding
+            const SizedBox(height: 30), // Bottom padding
             // Continue Button
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24.0),
@@ -135,19 +137,19 @@ class _QuestionScreenState extends State<QuestionScreen> {
                     });
                   } else {
                     // Show completion message or navigate to another screen
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                       content: Text('You have completed the questions!'),
                     ));
                   }
                 },
                 style: ElevatedButton.styleFrom(
-                  padding: EdgeInsets.symmetric(vertical: 16),
-                  backgroundColor: Color(0xFFE67E22), // Orange color
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  backgroundColor: const Color(0xFFE67E22), // Orange color
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),
                 ),
-                child: Text(
+                child: const Text(
                   'CONTINUE',
                   style: TextStyle(
                     fontSize: 18,
@@ -157,7 +159,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
                 ),
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
           ],
         ),
       ),

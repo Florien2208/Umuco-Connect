@@ -4,6 +4,7 @@ import '../pages/wishlist_screen.dart';
 import '../pages/search_screen.dart';
 import '../pages/courses_screen.dart';
 import '../pages/home_screen.dart';
+import './notification_screen.dart';
 
 class MainNavigationScreen extends StatefulWidget {
   final int initialIndex;
@@ -28,7 +29,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
     const SearchScreen(),
     const CoursesScreen(),
     const WishlistScreen(),
-    HomePage(userEmail: null), // Placeholder, will be replaced in initState
+    const HomePage(userEmail: null), // Placeholder, will be replaced in initState
   ];
 
   @override
@@ -76,7 +77,11 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
           IconButton(
             icon: const Icon(Icons.notifications_outlined),
             onPressed: () {
-              // TODO: Implement notification functionality
+             
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => NotificationsPage()),
+              );
             },
           ),
           PopupMenuButton<String>(
@@ -193,12 +198,11 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
         children: _screens,
       ),
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor:  Color(0xFFEFC94C),
-        
+        backgroundColor: const Color(0xFFEFC94C),
         currentIndex: _currentIndex,
         onTap: _onBottomNavTap,
         selectedItemColor: const Color(0xFFEFC94C),
-        unselectedItemColor: Colors.grey,
+        unselectedItemColor: Colors.black,
         type: BottomNavigationBarType.fixed,
         items: const [
           BottomNavigationBarItem(
