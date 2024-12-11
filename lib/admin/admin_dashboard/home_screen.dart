@@ -140,7 +140,7 @@ class HomeScreen extends StatelessWidget {
                         ),
                         const SizedBox(height: 12),
                         const Text(
-                          'Free',
+                          '₹3,899',
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
@@ -208,7 +208,7 @@ class HomeScreen extends StatelessWidget {
                         ),
                         const SizedBox(height: 12),
                         const Text(
-                          'Free',
+                          '₹3,899',
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
@@ -278,7 +278,7 @@ class HomeScreen extends StatelessWidget {
                         ),
                         SizedBox(height: 12),
                         Text(
-                          'Free',
+                          '₹3,899',
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
@@ -334,7 +334,7 @@ class HomeScreen extends StatelessWidget {
                         ),
                         SizedBox(height: 12),
                         Text(
-                          'Free',
+                          '₹3,899',
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,

@@ -29,7 +29,29 @@ class _HomePageState extends State<HomePage> {
       body: Column(
         children: [
           // Custom header
-         
+          Container(
+            color: const Color(0xFFEFC94C),
+            padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 16),
+            child: Row(
+              children: [
+                const CircleAvatar(
+                  radius: 30,
+                  backgroundColor: Colors.white,
+                  child: Icon(Icons.person, size: 40, color: Color(0xFFEFC94C)),
+                ),
+                const SizedBox(width: 16),
+                if (widget.userEmail != null)
+                  Text(
+                    widget.userEmail!,
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+              ],
+            ),
+          ),
 
           // Account menu items
           Expanded(

@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import '../dashboard/account_screen.dart';
-import '../dashboard/wishlist_screen.dart';
-import '../dashboard/search_screen.dart';
-import '../dashboard/courses_screen.dart';
-import '../dashboard/home_screen.dart';
+import '../admin_dashboard/account_screen.dart';
+import '../admin_dashboard/wishlist_screen.dart';
+import '../admin_dashboard/search_screen.dart';
+import '../admin_dashboard/courses_screen.dart';
+import '../admin_dashboard/home_screen.dart';
 import './notification_screen.dart';
 
-class TeacherMainNavigationScreen extends StatefulWidget {
+class AdminMainNavigationScreen extends StatefulWidget {
   final int initialIndex;
   final String? userEmail;
 
-  const TeacherMainNavigationScreen({
+  const AdminMainNavigationScreen({
     super.key,
     this.initialIndex = 0,
     this.userEmail,
@@ -20,7 +20,7 @@ class TeacherMainNavigationScreen extends StatefulWidget {
   _MainNavigationScreenState createState() => _MainNavigationScreenState();
 }
 
-class _MainNavigationScreenState extends State<TeacherMainNavigationScreen> {
+class _MainNavigationScreenState extends State<AdminMainNavigationScreen> {
   late int _currentIndex;
 
   // List of screens in the same order as bottom navigation
@@ -51,7 +51,7 @@ class _MainNavigationScreenState extends State<TeacherMainNavigationScreen> {
   String _getAppBarTitle() {
     switch (_currentIndex) {
       case 0:
-        return 'INSTRUCTOR CONNECT ';
+        return 'ADMIN CONNECT ';
       case 1:
         return 'Search';
       case 2:
@@ -105,6 +105,10 @@ class _MainNavigationScreenState extends State<TeacherMainNavigationScreen> {
               const PopupMenuItem<String>(
                 value: 'help',
                 child: Text('Help'),
+              ),
+              const PopupMenuItem<String>(
+                value: 'logout',
+                child: Text('Logout'),
               ),
             ],
           ),

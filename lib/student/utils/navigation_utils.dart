@@ -28,7 +28,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
     const HomeScreen(),
     const SearchScreen(),
     const CoursesScreen(),
-    const WishlistScreen(),
+    const CourseWishlistScreen(),
     const HomePage(userEmail: null), // Placeholder, will be replaced in initState
   ];
 
@@ -70,7 +70,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(_getAppBarTitle()),
-        backgroundColor: const Color(0xFFEFC94C),
+        backgroundColor: const Color(0xFFD8A98B),
         foregroundColor: Colors.black,
         elevation: 0,
         actions: [
@@ -80,7 +80,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
              
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => NotificationsPage()),
+                MaterialPageRoute(builder: (context) => const NotificationsPage()),
               );
             },
           ),
@@ -116,7 +116,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
           children: [
             DrawerHeader(
               decoration: const BoxDecoration(
-                color: Color(0xFFEFC94C),
+                color: Color(0xFFD8A98B),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -198,10 +198,10 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
         children: _screens,
       ),
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: const Color(0xFFEFC94C),
+        backgroundColor: const Color(0xFFD8A98B),
         currentIndex: _currentIndex,
         onTap: _onBottomNavTap,
-        selectedItemColor: const Color(0xFFEFC94C),
+        selectedItemColor: const Color.fromARGB(255, 24, 45, 227),
         unselectedItemColor: Colors.black,
         type: BottomNavigationBarType.fixed,
         items: const [

@@ -42,7 +42,7 @@ class OnboardingScreen extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => QuestionScreen()),
+                            builder: (context) => const QuestionScreen()),
                       );
                     },
                     style: ElevatedButton.styleFrom(
@@ -106,7 +106,7 @@ class OnboardingScreen extends StatelessWidget {
 
 // Entry point
 void main() {
-  runApp(MaterialApp(
+  runApp(const MaterialApp(
     home: OnboardingScreen(),
   ));
 }

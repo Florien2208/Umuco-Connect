@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../student/utils/navigation_utils.dart';
 import '../../teacher/utils/teacher_navigation_utils.dart';
+import '../../admin/utils/admin_navigation_utils.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -126,32 +127,25 @@ class _LoginScreenState extends State<LoginScreen> {
                     height: 50,
                     child: ElevatedButton(
                       onPressed: () {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => MainNavigationScreen(
-                                userEmail: _emailController.text),
-                          ),
-                        );
-                        // if (_formKey.currentState!.validate()) {
-                        //   // Simple login validation (replace with your actual authentication logic)
-                        //   if (_emailController.text.isNotEmpty &&
-                        //       _passwordController.text.isNotEmpty) {
-                        //     // Navigate to HomeScreen with user's email
-                        //     Navigator.pushReplacement(
-                        //       context,
-                        //       MaterialPageRoute(
-                        //         builder: (context) => MainNavigationScreen(
-                        //             userEmail: _emailController.text),
-                        //       ),
-                        //     );
-                        //   } else {
-                        //     ScaffoldMessenger.of(context).showSnackBar(
-                        //       const SnackBar(
-                        //           content: Text('Invalid email or password')),
-                        //     );
-                        //   }
-                        // }
+                        if (_formKey.currentState!.validate()) {
+                          // Simple login validation (replace with your actual authentication logic)
+                          if (_emailController.text.isNotEmpty &&
+                              _passwordController.text.isNotEmpty) {
+                            // Navigate to HomeScreen with user's email
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => MainNavigationScreen(
+                                    userEmail: _emailController.text),
+                              ),
+                            );
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                  content: Text('Invalid email or password')),
+                            );
+                          }
+                        }
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.orange,
@@ -315,7 +309,13 @@ class _LoginScreenState extends State<LoginScreen> {
                   const SizedBox(width: 20),
                   ElevatedButton(
                     onPressed: () {
-                      // Admin button logic
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => AdminMainNavigationScreen(
+                              userEmail: _emailController.text),
+                        ),
+                      );
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.red,
