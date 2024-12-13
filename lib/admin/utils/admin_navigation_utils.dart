@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:umuco_connect_hub/admin/admin_dashboard/management_screen.dart';
 import '../admin_dashboard/account_screen.dart';
-import '../admin_dashboard/wishlist_screen.dart';
+import '../admin_dashboard/order_screen.dart';
 import '../admin_dashboard/search_screen.dart';
-import '../admin_dashboard/courses_screen.dart';
+import '../admin_dashboard/all_courses_screen.dart';
 import '../admin_dashboard/home_screen.dart';
 import './notification_screen.dart';
 
@@ -27,9 +28,11 @@ class _MainNavigationScreenState extends State<AdminMainNavigationScreen> {
   final List<Widget> _screens = [
     const HomeScreen(),
     const SearchScreen(),
-    const CoursesScreen(),
-    const WishlistScreen(),
-    const HomePage(userEmail: null), // Placeholder, will be replaced in initState
+    const AllCoursesScreen(),
+    const ManagementScreen(),
+    const OrderScreen(),
+    const AccountScreen(
+        userEmail: null), // Placeholder, will be replaced in initState
   ];
 
   @override
@@ -38,7 +41,7 @@ class _MainNavigationScreenState extends State<AdminMainNavigationScreen> {
     _currentIndex = widget.initialIndex;
 
     // Replace the last screen with HomePage with user email
-    _screens[4] = HomePage(userEmail: widget.userEmail);
+    _screens[5] = AccountScreen(userEmail: widget.userEmail);
   }
 
   void _onBottomNavTap(int index) {
@@ -59,9 +62,11 @@ class _MainNavigationScreenState extends State<AdminMainNavigationScreen> {
       case 3:
         return 'Wishlist';
       case 4:
+        return 'Courses';
+      case 5:
         return 'Account';
       default:
-        return 'Electric Vehicle App';
+        return 'Umuco Connect';
     }
   }
 
@@ -70,17 +75,17 @@ class _MainNavigationScreenState extends State<AdminMainNavigationScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(_getAppBarTitle()),
-        backgroundColor: const Color(0xFFEFC94C),
+        backgroundColor: const Color(0xFFD8A98B),
         foregroundColor: Colors.black,
         elevation: 0,
         actions: [
           IconButton(
             icon: const Icon(Icons.notifications_outlined),
             onPressed: () {
-             
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const NotificationsPage()),
+                MaterialPageRoute(
+                    builder: (context) => const NotificationsPage()),
               );
             },
           ),
@@ -120,7 +125,7 @@ class _MainNavigationScreenState extends State<AdminMainNavigationScreen> {
           children: [
             DrawerHeader(
               decoration: const BoxDecoration(
-                color: Color(0xFFEFC94C),
+                color: Color(0xFFD8A98B),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -182,7 +187,7 @@ class _MainNavigationScreenState extends State<AdminMainNavigationScreen> {
               title: const Text('Account'),
               onTap: () {
                 Navigator.pop(context);
-                _onBottomNavTap(4);
+                _onBottomNavTap(5);
               },
             ),
             const Divider(),
@@ -202,10 +207,10 @@ class _MainNavigationScreenState extends State<AdminMainNavigationScreen> {
         children: _screens,
       ),
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: const Color(0xFFEFC94C),
+        backgroundColor: const Color(0xFFD8A98B),
         currentIndex: _currentIndex,
         onTap: _onBottomNavTap,
-        selectedItemColor: const Color(0xFFEFC94C),
+        selectedItemColor: const Color.fromARGB(255, 57, 5, 245),
         unselectedItemColor: Colors.black,
         type: BottomNavigationBarType.fixed,
         items: const [
@@ -219,11 +224,15 @@ class _MainNavigationScreenState extends State<AdminMainNavigationScreen> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.book),
-            label: 'Courses',
+            label: 'All Courses',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.business),
-            label: 'Wishlist',
+            label: 'Management',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.card_giftcard),
+            label: 'Orders',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.account_circle),

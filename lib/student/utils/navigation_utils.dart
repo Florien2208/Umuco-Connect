@@ -22,6 +22,8 @@ class MainNavigationScreen extends StatefulWidget {
 
 class _MainNavigationScreenState extends State<MainNavigationScreen> {
   late int _currentIndex;
+  final TextEditingController _searchController = TextEditingController();
+  List<dynamic> _searchResults = []; // Add this to store search results
 
   // List of screens in the same order as bottom navigation
   final List<Widget> _screens = [
@@ -29,7 +31,8 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
     const SearchScreen(),
     const CoursesScreen(),
     const CourseWishlistScreen(),
-    const HomePage(userEmail: null), // Placeholder, will be replaced in initState
+    const HomePage(
+        userEmail: null), // Placeholder, will be replaced in initState
   ];
 
   @override
@@ -44,6 +47,30 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
   void _onBottomNavTap(int index) {
     setState(() {
       _currentIndex = index;
+
+      // Reset search state when navigating away from search
+      if (index != 1) {
+        _searchController.clear();
+        _searchResults.clear(); // Clear search results
+      }
+    });
+  }
+
+  // Function to perform search
+  void _performSearch(String query) {
+    // TODO: Implement actual search logic
+    // This is a placeholder implementation
+    setState(() {
+      if (query.isNotEmpty) {
+        _searchResults = List.generate(
+            5,
+            (index) => {
+                  'title': 'Search Result ${index + 1}',
+                  'description': 'Description for $query result ${index + 1}'
+                });
+      } else {
+        _searchResults.clear();
+      }
     });
   }
 
@@ -69,46 +96,91 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(_getAppBarTitle()),
+        title: _currentIndex == 1
+            ? Container(
+                height: 50,
+                margin: const EdgeInsets.symmetric(vertical: 0, horizontal: 0),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.1),
+                      spreadRadius: 1,
+                      blurRadius: 3,
+                      offset: const Offset(0, 2),
+                    ),
+                  ],
+                ),
+                child: TextField(
+                  controller: _searchController,
+                  decoration: InputDecoration(
+                    hintText: 'Search courses, content...',
+                    prefixIcon: const Icon(Icons.search, color: Colors.black54),
+                    suffixIcon: _searchController.text.isNotEmpty
+                        ? IconButton(
+                            icon:
+                                const Icon(Icons.clear, color: Colors.black54),
+                            onPressed: () {
+                              setState(() {
+                                _searchController.clear();
+                                _searchResults.clear();
+                              });
+                            },
+                          )
+                        : null,
+                    border: InputBorder.none,
+                    contentPadding: const EdgeInsets.symmetric(
+                        vertical: 15, horizontal: 10),
+                  ),
+                  style: const TextStyle(color: Colors.black, fontSize: 16),
+                  onChanged: _performSearch,
+                ),
+              )
+            : Text(_getAppBarTitle()),
+        titleSpacing: 10,
         backgroundColor: const Color(0xFFD8A98B),
         foregroundColor: Colors.black,
         elevation: 0,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.notifications_outlined),
-            onPressed: () {
-             
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const NotificationsPage()),
-              );
-            },
-          ),
-          PopupMenuButton<String>(
-            icon: const Icon(Icons.more_vert),
-            onSelected: (String value) {
-              // TODO: Implement menu item actions
-              switch (value) {
-                case 'settings':
-                  // Navigate to settings page
-                  break;
-                case 'help':
-                  // Show help or support page
-                  break;
-              }
-            },
-            itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
-              const PopupMenuItem<String>(
-                value: 'settings',
-                child: Text('Settings'),
-              ),
-              const PopupMenuItem<String>(
-                value: 'help',
-                child: Text('Help'),
-              ),
-            ],
-          ),
-        ],
+        actions: _currentIndex != 1
+            ? [
+                IconButton(
+                  icon: const Icon(Icons.notifications_outlined),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const NotificationsPage()),
+                    );
+                  },
+                ),
+                PopupMenuButton<String>(
+                  icon: const Icon(Icons.more_vert),
+                  onSelected: (String value) {
+                    // TODO: Implement menu item actions
+                    switch (value) {
+                      case 'settings':
+                        // Navigate to settings page
+                        break;
+                      case 'help':
+                        // Show help or support page
+                        break;
+                    }
+                  },
+                  itemBuilder: (BuildContext context) =>
+                      <PopupMenuEntry<String>>[
+                    const PopupMenuItem<String>(
+                      value: 'settings',
+                      child: Text('Settings'),
+                    ),
+                    const PopupMenuItem<String>(
+                      value: 'help',
+                      child: Text('Help'),
+                    ),
+                  ],
+                ),
+              ]
+            : null,
       ),
       drawer: Drawer(
         child: ListView(
@@ -193,10 +265,39 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
           ],
         ),
       ),
-      body: IndexedStack(
-        index: _currentIndex,
-        children: _screens,
-      ),
+      body: _currentIndex == 1
+          ? Stack(
+              children: [
+                const HomeScreen(), // Keep home screen as background
+                if (_searchController.text.isNotEmpty)
+                  Positioned(
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    child: Container(
+                      color: Colors.white.withOpacity(0.9),
+                      child: ListView.builder(
+                        itemCount: _searchResults.length,
+                        itemBuilder: (context, index) {
+                          final result = _searchResults[index];
+                          return ListTile(
+                            title: Text(result['title']),
+                            subtitle: Text(result['description']),
+                            onTap: () {
+                              // TODO: Implement result selection logic
+                            },
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+              ],
+            )
+          : IndexedStack(
+              index: _currentIndex,
+              children: _screens,
+            ),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: const Color(0xFFD8A98B),
         currentIndex: _currentIndex,

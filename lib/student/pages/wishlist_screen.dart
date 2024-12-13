@@ -70,7 +70,7 @@ class _CourseWishlistScreenState extends State<CourseWishlistScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Future Learning Wishlist',
           style: TextStyle(
             fontWeight: FontWeight.bold,
@@ -82,7 +82,7 @@ class _CourseWishlistScreenState extends State<CourseWishlistScreen> {
         elevation: 0,
         actions: [
           IconButton(
-            icon: Icon(Icons.add, color: Colors.black87),
+            icon: const Icon(Icons.add, color: Colors.black87),
             onPressed: () {
               // Add new course to wishlist
             },
@@ -98,8 +98,8 @@ class _CourseWishlistScreenState extends State<CourseWishlistScreen> {
           const SizedBox(height: 24),
 
           // Wishlist Courses
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 8),
             child: Text(
               'Courses to Learn',
               style: TextStyle(
@@ -114,7 +114,7 @@ class _CourseWishlistScreenState extends State<CourseWishlistScreen> {
           // Course List
           ListView.builder(
             shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
+            physics: const NeverScrollableScrollPhysics(),
             itemCount: _wishlistCourses.length,
             itemBuilder: (context, index) {
               return _buildCourseCard(_wishlistCourses[index]);
@@ -149,7 +149,7 @@ class _CourseWishlistScreenState extends State<CourseWishlistScreen> {
                     color: Colors.blue[800],
                   ),
                 ),
-                SizedBox(height: 8),
+                const SizedBox(height: 8),
                 Text(
                   '${_wishlistCourses.length} Courses Planned',
                   style: TextStyle(
@@ -160,12 +160,12 @@ class _CourseWishlistScreenState extends State<CourseWishlistScreen> {
               ],
             ),
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
               decoration: BoxDecoration(
                 color: Colors.blue[700],
                 borderRadius: BorderRadius.circular(20),
               ),
-              child: Text(
+              child: const Text(
                 'Edit Plan',
                 style: TextStyle(
                   color: Colors.white,
@@ -213,7 +213,7 @@ class _CourseWishlistScreenState extends State<CourseWishlistScreen> {
                 children: [
                   Text(
                     course['title'],
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.bold,
                       color: Colors.black87,
@@ -241,7 +241,7 @@ class _CourseWishlistScreenState extends State<CourseWishlistScreen> {
                       Row(
                         children: [
                           _buildStarRating(course['rating']),
-                          SizedBox(width: 6),
+                          const SizedBox(width: 6),
                           Text(
                             '(${course['totalRatings']})',
                             style: TextStyle(
@@ -275,8 +275,8 @@ class _CourseWishlistScreenState extends State<CourseWishlistScreen> {
                       // Total Hours
                       Row(
                         children: [
-                          Icon(Icons.access_time, color: Colors.blue, size: 14),
-                          SizedBox(width: 4),
+                          const Icon(Icons.access_time, color: Colors.blue, size: 14),
+                          const SizedBox(width: 4),
                           Text(
                             '${course['totalHours']} hrs',
                             style: TextStyle(
@@ -290,9 +290,9 @@ class _CourseWishlistScreenState extends State<CourseWishlistScreen> {
                       // Weekly Commitment
                       Row(
                         children: [
-                          Icon(Icons.calendar_today,
+                          const Icon(Icons.calendar_today,
                               color: Colors.green, size: 14),
-                          SizedBox(width: 4),
+                          const SizedBox(width: 4),
                           Text(
                             '${course['weeklyCommitment']} hrs/week',
                             style: TextStyle(
@@ -309,9 +309,9 @@ class _CourseWishlistScreenState extends State<CourseWishlistScreen> {
                   // Completion Time
                   Row(
                     children: [
-                      Icon(Icons.calendar_month,
+                      const Icon(Icons.calendar_month,
                           color: Colors.orange, size: 14),
-                      SizedBox(width: 4),
+                      const SizedBox(width: 4),
                       Text(
                         '${course['completionTime']}',
                         style: TextStyle(
@@ -340,7 +340,7 @@ class _CourseWishlistScreenState extends State<CourseWishlistScreen> {
             Column(
               children: [
                 IconButton(
-                  constraints: BoxConstraints(),
+                  constraints: const BoxConstraints(),
                   padding: EdgeInsets.zero,
                   icon: Icon(Icons.remove_circle_outline,
                       color: Colors.red[300], size: 20),
@@ -349,9 +349,9 @@ class _CourseWishlistScreenState extends State<CourseWishlistScreen> {
                   },
                 ),
                 IconButton(
-                  constraints: BoxConstraints(),
+                  constraints: const BoxConstraints(),
                   padding: EdgeInsets.zero,
-                  icon: Icon(Icons.bookmark_add, color: Colors.blue, size: 20),
+                  icon: const Icon(Icons.bookmark_add, color: Colors.blue, size: 20),
                   onPressed: () {
                     // Mark as priority or add to learning plan
                   },
@@ -384,25 +384,25 @@ class _CourseWishlistScreenState extends State<CourseWishlistScreen> {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           IconButton(
-            icon: Icon(Icons.home, color: Colors.grey),
+            icon: const Icon(Icons.home, color: Colors.grey),
             onPressed: () {
               // Navigate to home
             },
           ),
           IconButton(
-            icon: Icon(Icons.book, color: Colors.blue),
+            icon: const Icon(Icons.book, color: Colors.blue),
             onPressed: () {
               // Current page
             },
           ),
           IconButton(
-            icon: Icon(Icons.add_circle_outline, color: Colors.grey),
+            icon: const Icon(Icons.add_circle_outline, color: Colors.grey),
             onPressed: () {
               // Add new course
             },
           ),
           IconButton(
-            icon: Icon(Icons.person_outline, color: Colors.grey),
+            icon: const Icon(Icons.person_outline, color: Colors.grey),
             onPressed: () {
               // Navigate to profile
             },

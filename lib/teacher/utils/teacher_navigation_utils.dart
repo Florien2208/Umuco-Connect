@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import '../dashboard/account_screen.dart';
-import '../dashboard/wishlist_screen.dart';
+import '../dashboard/my_class_screen.dart';
 import '../dashboard/search_screen.dart';
-import '../dashboard/courses_screen.dart';
+import '../dashboard/my_courses_screen.dart';
 import '../dashboard/home_screen.dart';
 import './notification_screen.dart';
 
@@ -27,9 +27,10 @@ class _MainNavigationScreenState extends State<TeacherMainNavigationScreen> {
   final List<Widget> _screens = [
     const HomeScreen(),
     const SearchScreen(),
-    const CoursesScreen(),
-    const WishlistScreen(),
-    const HomePage(userEmail: null), // Placeholder, will be replaced in initState
+    const MyCoursesScreen(),
+    const MyClassScreen(),
+    const AccountScreen(
+        userEmail: null), // Placeholder, will be replaced in initState
   ];
 
   @override
@@ -38,7 +39,7 @@ class _MainNavigationScreenState extends State<TeacherMainNavigationScreen> {
     _currentIndex = widget.initialIndex;
 
     // Replace the last screen with HomePage with user email
-    _screens[4] = HomePage(userEmail: widget.userEmail);
+    _screens[4] = AccountScreen(userEmail: widget.userEmail);
   }
 
   void _onBottomNavTap(int index) {
@@ -51,7 +52,7 @@ class _MainNavigationScreenState extends State<TeacherMainNavigationScreen> {
   String _getAppBarTitle() {
     switch (_currentIndex) {
       case 0:
-        return 'INSTRUCTOR CONNECT ';
+        return 'INSTRUCTOR';
       case 1:
         return 'Search';
       case 2:
@@ -70,17 +71,17 @@ class _MainNavigationScreenState extends State<TeacherMainNavigationScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(_getAppBarTitle()),
-        backgroundColor: const Color(0xFFEFC94C),
+        backgroundColor: const Color(0xFFD8A98B),
         foregroundColor: Colors.black,
         elevation: 0,
         actions: [
           IconButton(
             icon: const Icon(Icons.notifications_outlined),
             onPressed: () {
-             
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const NotificationsPage()),
+                MaterialPageRoute(
+                    builder: (context) => const NotificationsPage()),
               );
             },
           ),
@@ -116,7 +117,7 @@ class _MainNavigationScreenState extends State<TeacherMainNavigationScreen> {
           children: [
             DrawerHeader(
               decoration: const BoxDecoration(
-                color: Color(0xFFEFC94C),
+                color: Color(0xFFD8A98B),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -159,7 +160,7 @@ class _MainNavigationScreenState extends State<TeacherMainNavigationScreen> {
             ),
             ListTile(
               leading: const Icon(Icons.local_parking),
-              title: const Text('Courses'),
+              title: const Text('My Courses'),
               onTap: () {
                 Navigator.pop(context);
                 _onBottomNavTap(2);
@@ -167,7 +168,7 @@ class _MainNavigationScreenState extends State<TeacherMainNavigationScreen> {
             ),
             ListTile(
               leading: const Icon(Icons.business),
-              title: const Text('Wishlist'),
+              title: const Text('My Class'),
               onTap: () {
                 Navigator.pop(context);
                 _onBottomNavTap(3);
@@ -198,7 +199,7 @@ class _MainNavigationScreenState extends State<TeacherMainNavigationScreen> {
         children: _screens,
       ),
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: const Color(0xFFEFC94C),
+        backgroundColor: const Color(0xFFD8A98B),
         currentIndex: _currentIndex,
         onTap: _onBottomNavTap,
         selectedItemColor: const Color(0xFFEFC94C),
@@ -215,11 +216,11 @@ class _MainNavigationScreenState extends State<TeacherMainNavigationScreen> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.book),
-            label: 'Courses',
+            label: 'My Courses',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.business),
-            label: 'Wishlist',
+            label: 'My class',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.account_circle),

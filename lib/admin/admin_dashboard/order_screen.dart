@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 
-class SearchScreen extends StatelessWidget {
-  const SearchScreen({super.key});
+class OrderScreen extends StatelessWidget {
+  const OrderScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-
-      body:  Center(
+      body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -18,14 +17,14 @@ class SearchScreen extends StatelessWidget {
             ),
             SizedBox(height: 20),
             Text(
-              'Search scren',
+              'Order screen',
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
               ),
             ),
             SizedBox(height: 10),
-          
+        
           ],
         ),
       ),
