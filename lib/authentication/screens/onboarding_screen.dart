@@ -1,33 +1,54 @@
 import 'package:flutter/material.dart';
-
-// Import the QuestionScreen file
-import 'question_screen.dart'; // Ensure this matches the file name where `QuestionScreen` is defined
-import 'login_screen.dart'; // Ensure this matches the file name where `QuestionScreen` is defined
+import 'package:provider/provider.dart';
+import 'question_screen.dart';
+import 'login_screen.dart';
+import '../../theme/theme_provider.dart';
 
 class OnboardingScreen extends StatelessWidget {
   const OnboardingScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+
     return Scaffold(
-      backgroundColor: Colors.white,
       body: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            // Expanded section for the top (can be replaced with an image or logo)
+            // Theme toggle and expanded section
             Expanded(
-              child: Container(
-                color: Colors.white,
-                child: const Center(
-                  child: Text(
-                    '', // Intentionally left blank as per your design
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
+              child: Stack(
+                children: [
+                  // Your existing expanded content
+                  Center(
+                    child: Container(
+                      child: const Text(
+                        '', // Intentionally left blank as per your design
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ),
                   ),
-                ),
+                  // Theme toggle button in top-right corner
+                  Positioned(
+                    top: 16,
+                    right: 16,
+                    child: IconButton(
+                      icon: Icon(
+                        themeProvider.isDarkMode
+                            ? Icons.light_mode
+                            : Icons.dark_mode,
+                        color: Theme.of(context).iconTheme.color,
+                      ),
+                      onPressed: () {
+                        themeProvider.toggleTheme();
+                      },
+                    ),
+                  ),
+                ],
               ),
             ),
             // Buttons Section
@@ -38,11 +59,11 @@ class OnboardingScreen extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 24.0),
                   child: ElevatedButton(
                     onPressed: () {
-                      // Navigate to the QuestionScreen
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const QuestionScreen()),
+                          builder: (context) => const QuestionScreen(),
+                        ),
                       );
                     },
                     style: ElevatedButton.styleFrom(
@@ -62,16 +83,16 @@ class OnboardingScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(height: 16), // Space between buttons
+                const SizedBox(height: 16),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 24.0),
                   child: OutlinedButton(
                     onPressed: () {
-                      // Navigate to the login screen
-                        Navigator.push(
+                      Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const LoginScreen()),
+                          builder: (context) => const LoginScreen(),
+                        ),
                       );
                     },
                     style: OutlinedButton.styleFrom(
@@ -96,17 +117,10 @@ class OnboardingScreen extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 30), // Bottom padding
+            const SizedBox(height: 30),
           ],
         ),
       ),
     );
   }
-}
-
-// Entry point
-void main() {
-  runApp(const MaterialApp(
-    home: OnboardingScreen(),
-  ));
 }

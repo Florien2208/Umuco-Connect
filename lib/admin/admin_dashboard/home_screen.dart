@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../../theme/theme_provider.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+    final isDarkMode = themeProvider.isDarkMode;
+
     return Scaffold(
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -20,7 +26,7 @@ class HomeScreen extends StatelessWidget {
                   image: const AssetImage('assets/banner.png'),
                   fit: BoxFit.cover,
                   colorFilter: ColorFilter.mode(
-                    Colors.blue.withOpacity(0.5),
+                    (isDarkMode ? Colors.black : Colors.blue).withOpacity(0.5),
                     BlendMode.darken,
                   ),
                 ),
@@ -29,21 +35,17 @@ class HomeScreen extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(24.0),
                 child: Row(
-                  mainAxisAlignment:
-                      MainAxisAlignment.end, // Align content to the right
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Column(
-                      crossAxisAlignment:
-                          CrossAxisAlignment.end, // Align text to the right
-                      mainAxisAlignment:
-                          MainAxisAlignment.center, // Center vertically
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Text(
+                        Text(
                           'Our Culture is\nour Priority and\nExperience!!!',
-                          textAlign:
-                              TextAlign.right, // Ensure text is right-aligned
+                          textAlign: TextAlign.right,
                           style: TextStyle(
-                            color: Colors.white,
+                            color: isDarkMode ? Colors.white : Colors.white,
                             fontSize: 24,
                             fontWeight: FontWeight.bold,
                           ),
@@ -52,15 +54,13 @@ class HomeScreen extends StatelessWidget {
                         GestureDetector(
                           onTap: () {
                             // Add navigation or action when tapped
-                            // Navigator.push(...) or any other action
                           },
-                          child: const Text(
+                          child: Text(
                             'Explore →',
                             style: TextStyle(
-                              color: Colors.black,
+                              color: isDarkMode ? Colors.white70 : Colors.black,
                               fontSize: 16,
-                              decoration: TextDecoration
-                                  .underline, // Optional: add underline
+                              decoration: TextDecoration.underline,
                             ),
                           ),
                         ),
@@ -73,11 +73,12 @@ class HomeScreen extends StatelessWidget {
             const SizedBox(height: 24),
 
             // Courses based on your search
-            const Text(
+            Text(
               'Courses based on your search',
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
+                color: Theme.of(context).textTheme.titleLarge?.color,
               ),
             ),
             const SizedBox(height: 12),
@@ -87,7 +88,9 @@ class HomeScreen extends StatelessWidget {
                   child: Container(
                     padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
-                      color: Colors.pink[50],
+                      color: isDarkMode
+                          ? Colors.pink.shade900.withOpacity(0.2)
+                          : Colors.pink[50],
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Column(
@@ -97,7 +100,7 @@ class HomeScreen extends StatelessWidget {
                           borderRadius: BorderRadius.circular(12),
                           child: SizedBox(
                             height: 120,
-                            width: 200, // 60% of the container width
+                            width: 200,
                             child: Image.asset(
                               'assets/course.png',
                               fit: BoxFit.cover,
@@ -105,45 +108,57 @@ class HomeScreen extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(height: 8),
-                        const Text(
+                        Text(
                           'Expand your knowledge with these engaging courses',
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
+                            color:
+                                Theme.of(context).textTheme.titleMedium?.color,
                           ),
                         ),
                         const SizedBox(height: 8),
-                        const Text(
+                        Text(
                           'Angles Yyo - Teaching Position',
                           style: TextStyle(
                             fontSize: 14,
-                            color: Colors.grey,
+                            color: Theme.of(context)
+                                .textTheme
+                                .bodyMedium
+                                ?.color
+                                ?.withOpacity(0.7),
                           ),
                         ),
                         const SizedBox(height: 4),
-                        const Row(
+                        Row(
                           children: [
-                            Icon(
+                            const Icon(
                               Icons.star,
                               color: Colors.orange,
                               size: 16,
                             ),
-                            SizedBox(width: 4),
+                            const SizedBox(width: 4),
                             Text(
                               '4.5 (1,454)',
                               style: TextStyle(
                                 fontSize: 14,
-                                color: Colors.grey,
+                                color: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium
+                                    ?.color
+                                    ?.withOpacity(0.7),
                               ),
                             ),
                           ],
                         ),
                         const SizedBox(height: 12),
-                        const Text(
-                          '₹3,899',
+                        Text(
+                          'Free',
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
+                            color:
+                                Theme.of(context).textTheme.titleMedium?.color,
                           ),
                         ),
                       ],
@@ -155,7 +170,9 @@ class HomeScreen extends StatelessWidget {
                   child: Container(
                     padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
-                      color: Colors.green[50],
+                      color: isDarkMode
+                          ? Colors.green.shade900.withOpacity(0.2)
+                          : Colors.green[50],
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Column(
@@ -165,7 +182,7 @@ class HomeScreen extends StatelessWidget {
                           borderRadius: BorderRadius.circular(12),
                           child: SizedBox(
                             height: 120,
-                            width: 200, // 60% of the container width
+                            width: 200,
                             child: Image.asset(
                               'assets/course2.png',
                               fit: BoxFit.cover,
@@ -173,45 +190,57 @@ class HomeScreen extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(height: 8),
-                        const Text(
+                        Text(
                           'Expand your knowledge with these engaging courses',
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
+                            color:
+                                Theme.of(context).textTheme.titleMedium?.color,
                           ),
                         ),
                         const SizedBox(height: 8),
-                        const Text(
+                        Text(
                           'Angles Yyo - Teaching Position',
                           style: TextStyle(
                             fontSize: 14,
-                            color: Colors.grey,
+                            color: Theme.of(context)
+                                .textTheme
+                                .bodyMedium
+                                ?.color
+                                ?.withOpacity(0.7),
                           ),
                         ),
                         const SizedBox(height: 4),
-                        const Row(
+                        Row(
                           children: [
-                            Icon(
+                            const Icon(
                               Icons.star,
                               color: Colors.orange,
                               size: 16,
                             ),
-                            SizedBox(width: 4),
+                            const SizedBox(width: 4),
                             Text(
                               '4.5 (1,454)',
                               style: TextStyle(
                                 fontSize: 14,
-                                color: Colors.grey,
+                                color: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium
+                                    ?.color
+                                    ?.withOpacity(0.7),
                               ),
                             ),
                           ],
                         ),
                         const SizedBox(height: 12),
-                        const Text(
-                          '₹3,899',
+                        Text(
+                          'Free',
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
+                            color:
+                                Theme.of(context).textTheme.titleMedium?.color,
                           ),
                         ),
                       ],
@@ -223,11 +252,12 @@ class HomeScreen extends StatelessWidget {
             const SizedBox(height: 24),
 
             // Recommended Courses
-            const Text(
+            Text(
               'Recommended courses',
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
+                color: Theme.of(context).textTheme.titleLarge?.color,
               ),
             ),
             const SizedBox(height: 12),
@@ -237,10 +267,12 @@ class HomeScreen extends StatelessWidget {
                   child: Container(
                     padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
-                      color: Colors.pink[50],
+                      color: isDarkMode
+                          ? Colors.pink.shade900.withOpacity(0.2)
+                          : Colors.pink[50],
                       borderRadius: BorderRadius.circular(12),
                     ),
-                    child: const Column(
+                    child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
@@ -248,40 +280,52 @@ class HomeScreen extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
+                            color:
+                                Theme.of(context).textTheme.titleMedium?.color,
                           ),
                         ),
-                        SizedBox(height: 8),
+                        const SizedBox(height: 8),
                         Text(
                           'Angles Yyo - Teaching Position',
                           style: TextStyle(
                             fontSize: 14,
-                            color: Colors.grey,
+                            color: Theme.of(context)
+                                .textTheme
+                                .bodyMedium
+                                ?.color
+                                ?.withOpacity(0.7),
                           ),
                         ),
-                        SizedBox(height: 4),
+                        const SizedBox(height: 4),
                         Row(
                           children: [
-                            Icon(
+                            const Icon(
                               Icons.star,
                               color: Colors.orange,
                               size: 16,
                             ),
-                            SizedBox(width: 4),
+                            const SizedBox(width: 4),
                             Text(
                               '4.5 (1,454)',
                               style: TextStyle(
                                 fontSize: 14,
-                                color: Colors.grey,
+                                color: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium
+                                    ?.color
+                                    ?.withOpacity(0.7),
                               ),
                             ),
                           ],
                         ),
-                        SizedBox(height: 12),
+                        const SizedBox(height: 12),
                         Text(
-                          '₹3,899',
+                          'Free',
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
+                            color:
+                                Theme.of(context).textTheme.titleMedium?.color,
                           ),
                         ),
                       ],
@@ -293,10 +337,12 @@ class HomeScreen extends StatelessWidget {
                   child: Container(
                     padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
-                      color: Colors.green[50],
+                      color: isDarkMode
+                          ? Colors.green.shade900.withOpacity(0.2)
+                          : Colors.green[50],
                       borderRadius: BorderRadius.circular(12),
                     ),
-                    child: const Column(
+                    child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
@@ -304,40 +350,52 @@ class HomeScreen extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
+                            color:
+                                Theme.of(context).textTheme.titleMedium?.color,
                           ),
                         ),
-                        SizedBox(height: 8),
+                        const SizedBox(height: 8),
                         Text(
                           'Angles Yyo - Teaching Position',
                           style: TextStyle(
                             fontSize: 14,
-                            color: Colors.grey,
+                            color: Theme.of(context)
+                                .textTheme
+                                .bodyMedium
+                                ?.color
+                                ?.withOpacity(0.7),
                           ),
                         ),
-                        SizedBox(height: 4),
+                        const SizedBox(height: 4),
                         Row(
                           children: [
-                            Icon(
+                            const Icon(
                               Icons.star,
                               color: Colors.orange,
                               size: 16,
                             ),
-                            SizedBox(width: 4),
+                            const SizedBox(width: 4),
                             Text(
                               '4.5 (1,454)',
                               style: TextStyle(
                                 fontSize: 14,
-                                color: Colors.grey,
+                                color: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium
+                                    ?.color
+                                    ?.withOpacity(0.7),
                               ),
                             ),
                           ],
                         ),
-                        SizedBox(height: 12),
+                        const SizedBox(height: 12),
                         Text(
-                          '₹3,899',
+                          'Free',
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
+                            color:
+                                Theme.of(context).textTheme.titleMedium?.color,
                           ),
                         ),
                       ],
@@ -349,43 +407,44 @@ class HomeScreen extends StatelessWidget {
             const SizedBox(height: 24),
 
             // Course Categories
-            const Text(
+            Text(
               'Courses categories',
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
+                color: Theme.of(context).textTheme.titleLarge?.color,
               ),
             ),
             const SizedBox(height: 12),
-            const Wrap(
+            Wrap(
               spacing: 8,
               runSpacing: 8,
               children: [
-                Chip(
-                  label: Text('Colonial'),
-                  backgroundColor: Color(0xFFFFF3E0),
-                ),
-                Chip(
-                  label: Text('Pre-colonial'),
-                  backgroundColor: Color(0xFFFFF3E0),
-                ),
-                Chip(
-                  label: Text('Virunga'),
-                  backgroundColor: Color(0xFFFFF3E0),
-                ),
-                Chip(
-                  label: Text('Visit Rwanda'),
-                  backgroundColor: Color(0xFFFFF3E0),
-                ),
-                Chip(
-                  label: Text('Genocide'),
-                  backgroundColor: Color(0xFFFFF3E0),
-                ),
+                _buildChip('Colonial', context),
+                _buildChip('Pre-colonial', context),
+                _buildChip('Virunga', context),
+                _buildChip('Visit Rwanda', context),
+                _buildChip('Genocide', context),
               ],
             ),
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildChip(String label, BuildContext context) {
+    final isDarkMode = Provider.of<ThemeProvider>(context).isDarkMode;
+    return Chip(
+      label: Text(
+        label,
+        style: TextStyle(
+          color: isDarkMode ? Colors.white : Colors.black87,
+        ),
+      ),
+      backgroundColor: isDarkMode
+          ? Colors.orange.shade900.withOpacity(0.2)
+          : const Color(0xFFFFF3E0),
     );
   }
 }

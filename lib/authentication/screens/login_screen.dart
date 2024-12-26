@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../../theme/theme_provider.dart';
 import '../../student/utils/navigation_utils.dart';
 import '../../teacher/utils/teacher_navigation_utils.dart';
 import '../../admin/utils/admin_navigation_utils.dart';
@@ -14,6 +16,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   bool _isPasswordVisible = false;
+  final _formKey = GlobalKey<FormState>();
 
   @override
   void dispose() {
@@ -28,14 +31,13 @@ class _LoginScreenState extends State<LoginScreen> {
     });
   }
 
-  final _formKey = GlobalKey<FormState>();
-
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+    final isDarkMode = themeProvider.isDarkMode;
+
     return Scaffold(
-      backgroundColor: Colors.white,
-      resizeToAvoidBottomInset:
-          false, // Prevent layout resizing when keyboard appears
+      resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
@@ -43,8 +45,7 @@ class _LoginScreenState extends State<LoginScreen> {
               left: 24.0,
               right: 24.0,
               top: 24.0,
-              bottom: MediaQuery.of(context).viewInsets.bottom +
-                  24.0, // Add padding to prevent overlap
+              bottom: MediaQuery.of(context).viewInsets.bottom + 24.0,
             ),
             child: Form(
               key: _formKey,
@@ -52,26 +53,38 @@ class _LoginScreenState extends State<LoginScreen> {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  const Text(
+                  Text(
                     'Nice to see you again',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
-                      color: Colors.black,
+                      color: isDarkMode ? Colors.white : Colors.black,
                     ),
                   ),
                   const SizedBox(height: 30),
                   TextFormField(
                     controller: _emailController,
                     keyboardType: TextInputType.emailAddress,
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       labelText: 'Email',
-                      labelStyle: TextStyle(color: Colors.black54),
-                      border: UnderlineInputBorder(),
-                      focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.black, width: 1.5),
+                      labelStyle: TextStyle(
+                        color: isDarkMode ? Colors.white70 : Colors.black54,
                       ),
+                      border: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                          color: isDarkMode ? Colors.white70 : Colors.black54,
+                        ),
+                      ),
+                      focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                          color: isDarkMode ? Colors.white : Colors.black,
+                          width: 1.5,
+                        ),
+                      ),
+                    ),
+                    style: TextStyle(
+                      color: isDarkMode ? Colors.white : Colors.black,
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -88,12 +101,24 @@ class _LoginScreenState extends State<LoginScreen> {
                   TextFormField(
                     controller: _passwordController,
                     obscureText: !_isPasswordVisible,
+                    style: TextStyle(
+                      color: isDarkMode ? Colors.white : Colors.black,
+                    ),
                     decoration: InputDecoration(
                       labelText: 'Password',
-                      labelStyle: const TextStyle(color: Colors.black54),
-                      border: const UnderlineInputBorder(),
-                      focusedBorder: const UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.black, width: 1.5),
+                      labelStyle: TextStyle(
+                        color: isDarkMode ? Colors.white70 : Colors.black54,
+                      ),
+                      border: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                          color: isDarkMode ? Colors.white70 : Colors.black54,
+                        ),
+                      ),
+                      focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                          color: isDarkMode ? Colors.white : Colors.black,
+                          width: 1.5,
+                        ),
                       ),
                       suffixIcon: GestureDetector(
                         onTap: _togglePasswordVisibility,
@@ -101,7 +126,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           _isPasswordVisible
                               ? Icons.visibility
                               : Icons.visibility_off,
-                          color: Colors.grey,
+                          color: isDarkMode ? Colors.white70 : Colors.grey,
                         ),
                       ),
                     ),
@@ -113,10 +138,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       onPressed: () {
                         // Forgot password logic
                       },
-                      child: const Text(
+                      child: Text(
                         'Forgot Password?',
                         style: TextStyle(
-                          color: Colors.black54,
+                          color: isDarkMode ? Colors.white70 : Colors.black54,
                           fontWeight: FontWeight.w400,
                         ),
                       ),
@@ -128,10 +153,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: ElevatedButton(
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
-                          // Simple login validation (replace with your actual authentication logic)
                           if (_emailController.text.isNotEmpty &&
                               _passwordController.text.isNotEmpty) {
-                            // Navigate to HomeScreen with user's email
                             Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
@@ -164,19 +187,29 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                   const SizedBox(height: 20),
-                  const Row(
+                  Row(
                     children: [
                       Expanded(
-                          child: Divider(color: Colors.black54, thickness: 1)),
+                        child: Divider(
+                          color: isDarkMode ? Colors.white54 : Colors.black54,
+                          thickness: 1,
+                        ),
+                      ),
                       Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 10),
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
                         child: Text(
                           'Or login using',
-                          style: TextStyle(color: Colors.black54),
+                          style: TextStyle(
+                            color: isDarkMode ? Colors.white54 : Colors.black54,
+                          ),
                         ),
                       ),
                       Expanded(
-                          child: Divider(color: Colors.black54, thickness: 1)),
+                        child: Divider(
+                          color: isDarkMode ? Colors.white54 : Colors.black54,
+                          thickness: 1,
+                        ),
+                      ),
                     ],
                   ),
                   const SizedBox(height: 20),
@@ -192,16 +225,21 @@ class _LoginScreenState extends State<LoginScreen> {
                           height: 24,
                           width: 24,
                         ),
-                        label: const Text(
+                        label: Text(
                           'Facebook',
-                          style: TextStyle(color: Colors.black),
+                          style: TextStyle(
+                            color: isDarkMode ? Colors.white : Colors.black,
+                          ),
                         ),
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.white,
+                          backgroundColor:
+                              isDarkMode ? Colors.grey[800] : Colors.white,
                           padding: const EdgeInsets.symmetric(horizontal: 24),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8),
-                            side: const BorderSide(color: Colors.grey),
+                            side: BorderSide(
+                              color: isDarkMode ? Colors.white54 : Colors.grey,
+                            ),
                           ),
                         ),
                       ),
@@ -215,16 +253,21 @@ class _LoginScreenState extends State<LoginScreen> {
                           height: 24,
                           width: 24,
                         ),
-                        label: const Text(
+                        label: Text(
                           'Gmail',
-                          style: TextStyle(color: Colors.black),
+                          style: TextStyle(
+                            color: isDarkMode ? Colors.white : Colors.black,
+                          ),
                         ),
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.white,
+                          backgroundColor:
+                              isDarkMode ? Colors.grey[800] : Colors.white,
                           padding: const EdgeInsets.symmetric(horizontal: 24),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8),
-                            side: const BorderSide(color: Colors.grey),
+                            side: BorderSide(
+                              color: isDarkMode ? Colors.white54 : Colors.grey,
+                            ),
                           ),
                         ),
                       ),
@@ -233,8 +276,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   const SizedBox(height: 30),
                   GestureDetector(
                     onTap: () {
-                      Navigator.pushNamed(
-                          context, '/signup'); // Navigate to signup
+                      Navigator.pushNamed(context, '/signup');
                     },
                     child: const Center(
                       child: Text(
@@ -246,96 +288,96 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                   ),
-
-                  // mainAxisAlignment: MainAxisAlignment.center,
-                  // children: [
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => MainNavigationScreen(
-                              userEmail: _emailController.text),
+                  const SizedBox(height: 20),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => MainNavigationScreen(
+                                  userEmail: _emailController.text),
+                            ),
+                          );
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.blue,
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 20,
+                            vertical: 12,
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
                         ),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue,
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 20,
-                        vertical: 12,
-                      ),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
-                    child: const Text(
-                      'User',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 20),
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => TeacherMainNavigationScreen(
-                              userEmail: _emailController.text),
+                        child: const Text(
+                          'User',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                          ),
                         ),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.green,
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 20,
-                        vertical: 12,
                       ),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
-                    child: const Text(
-                      'Teacher',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 20),
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => AdminMainNavigationScreen(
-                              userEmail: _emailController.text),
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => TeacherMainNavigationScreen(
+                                  userEmail: _emailController.text),
+                            ),
+                          );
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.green,
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 20,
+                            vertical: 12,
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
                         ),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.red,
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 20,
-                        vertical: 12,
+                        child: const Text(
+                          'Teacher',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                          ),
+                        ),
                       ),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => AdminMainNavigationScreen(
+                                  userEmail: _emailController.text),
+                            ),
+                          );
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.red,
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 20,
+                            vertical: 12,
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                        child: const Text(
+                          'Admin',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                          ),
+                        ),
                       ),
-                    ),
-                    child: const Text(
-                      'Admin',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                      ),
-                    ),
+                    ],
                   ),
-
                   const SizedBox(height: 30),
                 ],
               ),

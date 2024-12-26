@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../authentication/screens/login_screen.dart';
+import 'package:provider/provider.dart';
+import '../../theme/theme_provider.dart';
 
 class AccountScreen extends StatefulWidget {
   final String? userEmail;
@@ -7,10 +9,10 @@ class AccountScreen extends StatefulWidget {
   const AccountScreen({super.key, this.userEmail});
 
   @override
-  _HomePageState createState() => _HomePageState();
+  _AccountPageState createState() => _AccountPageState();
 }
 
-class _HomePageState extends State<AccountScreen> {
+class _AccountPageState extends State<AccountScreen> {
   void _handleLogout() {
     Navigator.of(context).pushAndRemoveUntil(
       MaterialPageRoute(builder: (context) => const LoginScreen()),
@@ -25,12 +27,9 @@ class _HomePageState extends State<AccountScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Column(
         children: [
-          // Custom header
-          
-
           // Account menu items
           Expanded(
             child: ListView(
@@ -144,10 +143,24 @@ class AccountMenuItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = Provider.of<ThemeProvider>(context).isDarkMode;
+
     return ListTile(
-      leading: Icon(icon, color: const Color(0xFFEFC94C)),
-      title: Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
-      trailing: const Icon(Icons.arrow_forward_ios, color: Colors.grey),
+      leading: Icon(
+        icon,
+        color: const Color(0xFFEFC94C),
+      ),
+      title: Text(
+        title,
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+          color: isDarkMode ? Colors.white : Colors.black,
+        ),
+      ),
+      trailing: Icon(
+        Icons.arrow_forward_ios,
+        color: isDarkMode ? Colors.white70 : Colors.grey,
+      ),
       onTap: onTap,
     );
   }
