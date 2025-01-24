@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'api_config.dart';
 import 'api_endpoints.dart';
+import './user_preference.dart';
 
 class AuthService {
   static final AuthService _instance = AuthService._internal();
@@ -17,25 +18,26 @@ class AuthService {
 
   Future<Map<String, dynamic>> login(String email, String password) async {
     try {
-      final response = await http
-          .post(
-            Uri.parse(ApiConfig.baseUrl + ApiEndpoints.login),
-            body: json.encode({
-              'email': email,
-              'password': password,
-            }),
-          )
-          .timeout(const Duration(seconds: ApiConfig.timeout));
+      final response = await http.post(
+        Uri.parse(ApiConfig.baseUrl + ApiEndpoints.login),
+        body: {
+          'email': email,
+          'password': password,
+        },
+      );
 
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
-        await _saveAuthData(data);
+
+        // Save user data
+        await UserPreferences().saveUserData(data);
+
         return {'success': true, 'data': data};
       } else {
-        return _handleError(response);
+        return {'success': false, 'message': 'Login failed'};
       }
     } catch (e) {
-      return {'success': false, 'message': 'Connection error: ${e.toString()}'};
+      return {'success': false, 'message': 'Network error'};
     }
   }
 
@@ -45,6 +47,9 @@ class AuthService {
       final response = await http
           .post(
             Uri.parse(ApiConfig.baseUrl + ApiEndpoints.signup),
+            headers: {
+              'Content-Type': 'application/json',
+            },
             body: json.encode(userData),
           )
           .timeout(const Duration(seconds: ApiConfig.timeout));
@@ -98,16 +103,33 @@ class AuthService {
 
   Map<String, dynamic> _handleError(http.Response response) {
     try {
+      print('Error Response Status Code: ${response.statusCode}');
+      print('Error Response Body: ${response.body}');
+
       final error = json.decode(response.body);
-      return {
-        'success': false,
-        'message': error['message'] ?? 'Unknown error occurred',
-        'errors': error['errors'],
-      };
+
+      // More comprehensive error parsing
+      if (error is Map) {
+        return {
+          'success': false,
+          'message':
+              error['message'] ?? error['error'] ?? 'Unknown error occurred',
+          'errors': error['errors'] ?? {},
+          'statusCode': response.statusCode
+        };
+      } else {
+        return {
+          'success': false,
+          'message': 'Server error: ${response.statusCode}',
+          'statusCode': response.statusCode
+        };
+      }
     } catch (e) {
+      print('Error parsing error response: $e');
       return {
         'success': false,
         'message': 'Server error: ${response.statusCode}',
+        'statusCode': response.statusCode
       };
     }
   }

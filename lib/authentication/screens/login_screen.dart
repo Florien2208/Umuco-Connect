@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:umuco_connect_hub/services/role_service.dart';
+import '../../services/auth_service.dart';
 import '../../theme/theme_provider.dart';
 import '../../student/utils/navigation_utils.dart';
 import '../../teacher/utils/teacher_navigation_utils.dart';
@@ -16,7 +18,9 @@ class _LoginScreenState extends State<LoginScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   bool _isPasswordVisible = false;
+  bool _isLoading = false;
   final _formKey = GlobalKey<FormState>();
+  final _authService = AuthService();
 
   @override
   void dispose() {
@@ -29,6 +33,71 @@ class _LoginScreenState extends State<LoginScreen> {
     setState(() {
       _isPasswordVisible = !_isPasswordVisible;
     });
+  }
+
+  Future<void> _handleLogin() async {
+    if (_formKey.currentState!.validate()) {
+      setState(() {
+        _isLoading = true;
+      });
+
+      final email = _emailController.text.trim();
+      final password = _passwordController.text;
+
+      try {
+        final response = await _authService.login(email, password);
+
+        if (response['success']) {
+          final roleId = response['data']['user']['roleId'];
+
+          final roleName = await RoleService().getRoleName(roleId);
+
+          _navigateBasedOnRole(roleName ?? "guest");
+        } else {
+          _showErrorMessage(response['message']);
+        }
+      } catch (e) {
+        _showErrorMessage('Network error: Please check your connection');
+      } finally {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    }
+  }
+
+  void _navigateBasedOnRole(String roleName) {
+    switch (roleName) {
+      case 'admin':
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+                builder: (_) => AdminMainNavigationScreen(
+                    userEmail: _emailController.text)));
+        break;
+      case 'teacher':
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+                builder: (_) => TeacherMainNavigationScreen(
+                    userEmail: _emailController.text)));
+        break;
+      case 'student':
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+                builder: (_) =>
+                    MainNavigationScreen(userEmail: _emailController.text)));
+        break;
+      default:
+        _showErrorMessage('Unknown user role');
+    }
+  }
+
+  void _showErrorMessage(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(message)),
+    );
   }
 
   @override
@@ -151,39 +220,23 @@ class _LoginScreenState extends State<LoginScreen> {
                   SizedBox(
                     height: 50,
                     child: ElevatedButton(
-                      onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          if (_emailController.text.isNotEmpty &&
-                              _passwordController.text.isNotEmpty) {
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => MainNavigationScreen(
-                                    userEmail: _emailController.text),
-                              ),
-                            );
-                          } else {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                  content: Text('Invalid email or password')),
-                            );
-                          }
-                        }
-                      },
+                      onPressed: _isLoading ? null : _handleLogin,
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.orange,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(25),
                         ),
                       ),
-                      child: const Text(
-                        'LOGIN',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
+                      child: _isLoading
+                          ? const CircularProgressIndicator(color: Colors.white)
+                          : const Text(
+                              'LOGIN',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                     ),
                   ),
                   const SizedBox(height: 20),

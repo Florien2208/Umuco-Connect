@@ -98,7 +98,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       'password': password,
     };
 
-    print("User-login: $userData");
+    print("User-signup: $userData");
     final response = await AuthService().signup(userData);
 
     setState(() {

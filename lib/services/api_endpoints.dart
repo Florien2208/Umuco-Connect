@@ -1,8 +1,8 @@
 // lib/services/api_endpoints.dart
 class ApiEndpoints {
   // Auth endpoints
-  static const String login = '/auth/login';
-  static const String signup = '/api/user/register';
+  static const String login = '/api/v1/auth/login';
+  static const String signup = '/api/v1/user/register';
   static const String logout = '/auth/logout';
 
   // User endpoints
@@ -20,4 +20,7 @@ class ApiEndpoints {
   // Admin endpoints
   static const String adminUsers = '/admin/users';
   static const String adminReports = '/admin/reports';
+  // Admin endpoints
+  static const String getRole = '/api/v1/role';
+  static const String adminRole = '/admin/reports';
 }
