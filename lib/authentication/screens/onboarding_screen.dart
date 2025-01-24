@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+
+import 'package:flutter_svg/flutter_svg.dart';
 import 'question_screen.dart';
 import 'login_screen.dart';
-import '../../theme/theme_provider.dart';
+
 
 class OnboardingScreen extends StatelessWidget {
   const OnboardingScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final themeProvider = Provider.of<ThemeProvider>(context);
+    
 
     return Scaffold(
       body: SafeArea(
@@ -17,38 +18,14 @@ class OnboardingScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             // Theme toggle and expanded section
+
             Expanded(
-              child: Stack(
-                children: [
-                  // Your existing expanded content
-                  Center(
-                    child: Container(
-                      child: const Text(
-                        '', // Intentionally left blank as per your design
-                        style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ),
-                  // Theme toggle button in top-right corner
-                  Positioned(
-                    top: 16,
-                    right: 16,
-                    child: IconButton(
-                      icon: Icon(
-                        themeProvider.isDarkMode
-                            ? Icons.light_mode
-                            : Icons.dark_mode,
-                        color: Theme.of(context).iconTheme.color,
-                      ),
-                      onPressed: () {
-                        themeProvider.toggleTheme();
-                      },
-                    ),
-                  ),
-                ],
+              child: Center(
+                child: SvgPicture.asset(
+                  'assets/onboarding_image.svg',
+                  width: 300,
+                  height: 300,
+                ),
               ),
             ),
             // Buttons Section

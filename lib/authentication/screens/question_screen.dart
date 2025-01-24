@@ -224,7 +224,7 @@ class _QuestionScreenState extends State<QuestionScreen>
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        actions: [],
+        actions: const [],
       ),
       body: SafeArea(
         child: Column(
@@ -241,7 +241,7 @@ class _QuestionScreenState extends State<QuestionScreen>
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Question ${currentQuestionIndex} of $totalQuestions',
+                        'Question $currentQuestionIndex of $totalQuestions',
                         style: theme.textTheme.titleMedium?.copyWith(
                           color: isDark ? Colors.grey[300] : Colors.grey[600],
                         ),

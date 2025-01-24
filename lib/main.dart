@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
       builder: (context, themeProvider, child) {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
-          title: 'Parking App',
+          title: 'UMUCO CONNECT',
           theme: AppThemes.lightTheme,
           darkTheme: AppThemes.darkTheme,
           themeMode:
